@@ -14,13 +14,16 @@ class VDevGameViewController: UIViewController {
     var game : SapperGame!
     var gameDelegate : GameObserverDelegate!
 
+    @IBOutlet weak var gameField: UICollectionView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        initStartGame()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        initStartGame()
+        //initStartGame()
     }
 
 
@@ -48,13 +51,13 @@ class VDevGameViewController: UIViewController {
 
         }catch let GameErrors.bomblimit(n) {
             print("Init error \(n) (bomb limit)")
-            showErrorMessage("Init error \(n) bomb limit)")
+            //showErrorMessage("Init error \(n) bomb limit)")
         }catch   GameErrors.outOfField{
             print("outOfField")
-            showErrorMessage("outOfField")
+           // showErrorMessage("outOfField")
         }catch{
             print("error")
-            showErrorMessage("game error")
+           //showErrorMessage("game error")
         }
     }
 
@@ -110,5 +113,75 @@ class VDevGameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
+}
+
+class MyCollectionViewCell: UICollectionViewCell {
+
+    @IBOutlet weak var myLabel: UILabel!
+}
+
+
+extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewDelegate{
+
+
+    // MARK: - UICollectionViewDataSource protocol
+
+
+    // tell the collection view how many cells to make
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return gameSettings!.numColumnsAndRows
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return gameSettings!.numColumnsAndRows
+    }
+
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        // get a reference to our storyboard cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! MyCollectionViewCell
+
+        // Use the outlet in our custom class to get a reference to the UILabel in the cell
+        cell.myLabel.text = game!.gameField[indexPath[0]][indexPath[1]].testDescription
+        cell.backgroundColor = UIColor.white // make cell more visible in our example project
+        cell.layer.borderColor = UIColor.black.cgColor
+        cell.layer.borderWidth = 1
+        cell.layer.cornerRadius = 8
+
+        return cell
+    }
+
+    // MARK: - UICollectionViewDelegate protocol
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        do{
+            try game.makeStep(indexPath[0],indexPath[1])
+
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
+
+            cell.myLabel.text = game!.gameField[indexPath[0]][indexPath[1]].testDescription
+            
+            collectionView.reloadItems(at: [indexPath])
+            game.testPrintField()
+
+        }catch{
+            print("error")
+            showErrorMessage("game error")
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.red
+    }
+
+    // change background color back when user releases touch
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        cell?.backgroundColor = UIColor.white
+    }
 
 }
+
