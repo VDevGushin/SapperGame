@@ -157,13 +157,19 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         do{
-            try game.makeStep(indexPath[0],indexPath[1])
+            var pathArray = [IndexPath]()
+
+            try game.makeStep(indexPath[0],indexPath[1]){
+                item in
+                    pathArray.append(IndexPath(row: item.0, section: item.1))
+            }
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
 
             cell.myLabel.text = game!.gameField[indexPath[0]][indexPath[1]].testDescription
-            
-            collectionView.reloadItems(at: [indexPath])
+
+            pathArray.append(indexPath)
+            collectionView.reloadItems(at: pathArray)
             game.testPrintField()
 
         }catch{
