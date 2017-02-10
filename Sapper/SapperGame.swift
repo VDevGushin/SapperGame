@@ -112,10 +112,10 @@ class SapperGame{
 
         var bombCounter = 0
         while(bombCounter < bombsCount){
-            //let i = Int(arc4random()) % numColumnsAndRows
-            //let j = Int(arc4random()) % numColumnsAndRows
-            let i = Int(drand48() * 100000) % numColumnsAndRows
-            let j = Int(drand48() * 100000) % numColumnsAndRows
+            let i = Int(arc4random()) % numColumnsAndRows
+            let j = Int(arc4random()) % numColumnsAndRows
+            //let i = Int(drand48() * 100000) % numColumnsAndRows
+            //let j = Int(drand48() * 100000) % numColumnsAndRows
 
             switch gameField[i][j].value{
             case .Bomb :

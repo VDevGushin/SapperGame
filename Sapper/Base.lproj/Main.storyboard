@@ -104,13 +104,22 @@
                                     <action selector="endGameHandler:" destination="VZ8-pj-Vfw" eventType="touchUpInside" id="YpQ-dW-JUA"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmd-Gv-5x8">
+                                <state key="normal" title="MakeTestStep"/>
+                                <connections>
+                                    <action selector="makeTestStepHandler:" destination="VZ8-pj-Vfw" eventType="touchUpInside" id="nBU-c4-7eF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rmd-Gv-5x8" firstAttribute="top" secondItem="RRv-AC-9N9" secondAttribute="bottom" constant="8" id="4Wx-TE-5O0"/>
+                            <constraint firstItem="rmd-Gv-5x8" firstAttribute="leading" secondItem="zg5-V0-njs" secondAttribute="leadingMargin" id="FCn-CN-uTf"/>
                             <constraint firstItem="RRv-AC-9N9" firstAttribute="top" secondItem="tdC-ZK-lpA" secondAttribute="bottom" id="Kvi-lI-HxH"/>
                             <constraint firstItem="RRv-AC-9N9" firstAttribute="trailing" secondItem="zg5-V0-njs" secondAttribute="trailingMargin" id="PXj-l3-R16"/>
                             <constraint firstItem="RRv-AC-9N9" firstAttribute="leading" secondItem="zg5-V0-njs" secondAttribute="leadingMargin" id="SQV-wz-s0d"/>
-                            <constraint firstItem="9cW-r1-zdb" firstAttribute="top" secondItem="RRv-AC-9N9" secondAttribute="bottom" constant="617" id="q5z-ZA-4La"/>
+                            <constraint firstItem="rmd-Gv-5x8" firstAttribute="top" secondItem="RRv-AC-9N9" secondAttribute="bottom" constant="8" id="Ysg-Kj-uOv"/>
+                            <constraint firstItem="rmd-Gv-5x8" firstAttribute="trailing" secondItem="zg5-V0-njs" secondAttribute="trailingMargin" id="hZn-fi-9Ls"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -11,11 +11,11 @@ import UIKit
 class VDevGameViewController: UIViewController {
 
     var gameSettings : GameSettings?
+    var game : SapperGame!
+    var gameDelegate : GameObserverDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -28,17 +28,23 @@ class VDevGameViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func makeTestStepHandler(_ sender: AnyObject) {
+        do{
+            let i = Int(arc4random()) % gameSettings!.numColumnsAndRows
+            let j = Int(arc4random()) % gameSettings!.numColumnsAndRows
+            try game.makeStep(i,j)
+            game.testPrintField()
+
+        }catch{
+            print("error")
+            showErrorMessage("game error")
+        }
+    }
+
     func initStartGame(){
         do{
-            let delegate = GameObserverDelegate(endGameAction : endGame)
-            let game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, delegate : delegate)
-
-            try game.makeStep(0,0)
-            try game.makeStep(2,2)
-            try game.makeStep(0,6)
-            try game.makeStep(1,6)
-
-            game.testPrintField()
+            gameDelegate = GameObserverDelegate(endGameAction : endGame)
+            game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, delegate : gameDelegate)
 
         }catch let GameErrors.bomblimit(n) {
             print("Init error \(n) (bomb limit)")
@@ -74,9 +80,9 @@ class VDevGameViewController: UIViewController {
             present(alertController, animated: true, completion: nil)
 
         }else{
-            print("Fick!!!")
+            print("Fuck!!!")
 
-            let alertController = UIAlertController(title: "Fick!!!", message:
+            let alertController = UIAlertController(title: "Fuck!!!", message:
                 "You lose!", preferredStyle: UIAlertControllerStyle.alert )
 
             alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
