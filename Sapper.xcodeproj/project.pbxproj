@@ -13,6 +13,7 @@
 		EF6ADEE81E4E4771008BA441 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF6ADEE71E4E4771008BA441 /* Assets.xcassets */; };
 		EF6ADEEB1E4E4771008BA441 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF6ADEE91E4E4771008BA441 /* LaunchScreen.storyboard */; };
 		EF6ADEF41E4E4887008BA441 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ADEF31E4E4887008BA441 /* GameSettings.swift */; };
+		EF6ADEF61E4E5D4F008BA441 /* VDevGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ADEF51E4E5D4F008BA441 /* VDevGameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		EF6ADEEA1E4E4771008BA441 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF6ADEEC1E4E4771008BA441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF6ADEF31E4E4887008BA441 /* GameSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		EF6ADEF51E4E5D4F008BA441 /* VDevGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VDevGameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				EF6ADEF21E4E47FB008BA441 /* GameLogic */,
 				EF6ADEE01E4E4771008BA441 /* AppDelegate.swift */,
 				EF6ADEE21E4E4771008BA441 /* ViewController.swift */,
+				EF6ADEF51E4E5D4F008BA441 /* VDevGameViewController.swift */,
 				EF6ADEE41E4E4771008BA441 /* Main.storyboard */,
 				EF6ADEE71E4E4771008BA441 /* Assets.xcassets */,
 				EF6ADEE91E4E4771008BA441 /* LaunchScreen.storyboard */,
@@ -149,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF6ADEE31E4E4771008BA441 /* ViewController.swift in Sources */,
+				EF6ADEF61E4E5D4F008BA441 /* VDevGameViewController.swift in Sources */,
 				EF6ADEE11E4E4771008BA441 /* AppDelegate.swift in Sources */,
 				EF6ADEF41E4E4887008BA441 /* GameSettings.swift in Sources */,
 			);
