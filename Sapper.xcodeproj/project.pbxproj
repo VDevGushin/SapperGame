@@ -14,6 +14,8 @@
 		EF6ADEEB1E4E4771008BA441 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF6ADEE91E4E4771008BA441 /* LaunchScreen.storyboard */; };
 		EF6ADEF41E4E4887008BA441 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ADEF31E4E4887008BA441 /* GameSettings.swift */; };
 		EF6ADEF61E4E5D4F008BA441 /* VDevGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ADEF51E4E5D4F008BA441 /* VDevGameViewController.swift */; };
+		EF6ADEF81E4E622C008BA441 /* SapperGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ADEF71E4E622C008BA441 /* SapperGame.swift */; };
+		EF6ADEFA1E4E6313008BA441 /* GameObserverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6ADEF91E4E6313008BA441 /* GameObserverDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		EF6ADEEC1E4E4771008BA441 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF6ADEF31E4E4887008BA441 /* GameSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		EF6ADEF51E4E5D4F008BA441 /* VDevGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VDevGameViewController.swift; sourceTree = "<group>"; };
+		EF6ADEF71E4E622C008BA441 /* SapperGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SapperGame.swift; sourceTree = "<group>"; };
+		EF6ADEF91E4E6313008BA441 /* GameObserverDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObserverDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				EF6ADEF31E4E4887008BA441 /* GameSettings.swift */,
+				EF6ADEF71E4E622C008BA441 /* SapperGame.swift */,
+				EF6ADEF91E4E6313008BA441 /* GameObserverDelegate.swift */,
 			);
 			name = GameLogic;
 			sourceTree = "<group>";
@@ -153,8 +159,10 @@
 			files = (
 				EF6ADEE31E4E4771008BA441 /* ViewController.swift in Sources */,
 				EF6ADEF61E4E5D4F008BA441 /* VDevGameViewController.swift in Sources */,
+				EF6ADEFA1E4E6313008BA441 /* GameObserverDelegate.swift in Sources */,
 				EF6ADEE11E4E4771008BA441 /* AppDelegate.swift in Sources */,
 				EF6ADEF41E4E4887008BA441 /* GameSettings.swift in Sources */,
+				EF6ADEF81E4E622C008BA441 /* SapperGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -97,12 +97,26 @@
                     <view key="view" contentMode="scaleToFill" id="zg5-V0-njs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RRv-AC-9N9">
+                                <state key="normal" title="End game"/>
+                                <connections>
+                                    <action selector="endGameHandler:" destination="VZ8-pj-Vfw" eventType="touchUpInside" id="YpQ-dW-JUA"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RRv-AC-9N9" firstAttribute="top" secondItem="tdC-ZK-lpA" secondAttribute="bottom" id="Kvi-lI-HxH"/>
+                            <constraint firstItem="RRv-AC-9N9" firstAttribute="trailing" secondItem="zg5-V0-njs" secondAttribute="trailingMargin" id="PXj-l3-R16"/>
+                            <constraint firstItem="RRv-AC-9N9" firstAttribute="leading" secondItem="zg5-V0-njs" secondAttribute="leadingMargin" id="SQV-wz-s0d"/>
+                            <constraint firstItem="9cW-r1-zdb" firstAttribute="top" secondItem="RRv-AC-9N9" secondAttribute="bottom" constant="617" id="q5z-ZA-4La"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LGi-Wz-oVE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1359" y="150"/>
+            <point key="canvasLocation" x="1288.8" y="111.99400299850076"/>
         </scene>
     </scenes>
     <resources>

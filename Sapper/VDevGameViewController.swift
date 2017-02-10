@@ -15,7 +15,78 @@ class VDevGameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        initStartGame()
+    }
+
+
+    @IBAction func endGameHandler(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
+    }
+
+    func initStartGame(){
+        do{
+            let delegate = GameObserverDelegate(endGameAction : endGame)
+            let game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, delegate : delegate)
+
+            try game.makeStep(0,0)
+            try game.makeStep(2,2)
+            try game.makeStep(0,6)
+            try game.makeStep(1,6)
+
+            game.testPrintField()
+
+        }catch let GameErrors.bomblimit(n) {
+            print("Init error \(n) (bomb limit)")
+            showErrorMessage("Init error \(n) bomb limit)")
+        }catch   GameErrors.outOfField{
+            print("outOfField")
+            showErrorMessage("outOfField")
+        }catch{
+            print("error")
+            showErrorMessage("game error")
+        }
+    }
+
+    func showErrorMessage(_ message : String){
+
+        let alertController = UIAlertController(title: "Game error", message:
+            message, preferredStyle: UIAlertControllerStyle.alert)
+
+        alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
+
+        present(alertController, animated: true, completion: nil)
+    }
+
+    func endGame(isWin : Bool){
+        if isWin{
+            print("Win!!!!!!!")
+
+            let alertController = UIAlertController(title: "EEeee!!!", message:
+                "You win!", preferredStyle: UIAlertControllerStyle.alert)
+
+            alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
+
+            present(alertController, animated: true, completion: nil)
+
+        }else{
+            print("Fick!!!")
+
+            let alertController = UIAlertController(title: "Fick!!!", message:
+                "You lose!", preferredStyle: UIAlertControllerStyle.alert )
+
+            alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
+
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+
+    private func goBack(_ : UIAlertAction) {
+        dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
