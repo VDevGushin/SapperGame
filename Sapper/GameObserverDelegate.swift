@@ -10,16 +10,10 @@ import Foundation
 
 class GameObserverDelegate : GameObserver{
     internal var endGameHandler :  (Bool)->()
-    internal var cellWasOpenInAnalizeHandler  : ((Int, Int))->()
 
 
-    init(endGameAction  : @escaping (Bool)->() , cellWasOpenInAnalizeHandler: @escaping  ((Int, Int))->()){
+    init(endGameAction  : @escaping (Bool)->()){
         self.endGameHandler = endGameAction
-        self.cellWasOpenInAnalizeHandler = cellWasOpenInAnalizeHandler
-    }
-
-    func cellWasOpenInAnalize(_ param : (Int, Int)){
-        cellWasOpenInAnalizeHandler(param)
     }
 
     func gameDidStart(message : String){

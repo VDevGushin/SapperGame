@@ -10,10 +10,8 @@ import Foundation
 
 protocol GameObserver : class {
     var endGameHandler :  (Bool)->() {get}
-    var cellWasOpenInAnalizeHandler  : ((Int, Int))->() {get}
     func gameDidStart(message : String)
     func gameDidEnd(isWin : Bool)
-    func cellWasOpenInAnalize(_: (Int, Int))
     func stepWasTaken(success : Bool, point: (row : Int , cell : Int), message : String? )
 }
 
@@ -290,7 +288,7 @@ class SapperGame{
         if j > 0{
             if isEmpty(i , j - 1) && !isOpen(i , j - 1){
                 gameField[i][j - 1].staus = .openCell
-                delegate?.cellWasOpenInAnalizeHandler((i, j - 1))
+                //delegate?.cellWasOpenInAnalize((i, j - 1))
                 checkCellsForOpen(i, j - 1)
             }
         }
@@ -298,7 +296,7 @@ class SapperGame{
         if j < numColumnsAndRows - 1{
             if isEmpty(i , j + 1) && !isOpen(i , j + 1){
                 gameField[i][j + 1].staus = .openCell
-                delegate?.cellWasOpenInAnalizeHandler((i, j + 1))
+                //delegate?.cellWasOpenInAnalize((i, j + 1))
                 checkCellsForOpen(i, j + 1)
             }
         }
@@ -306,7 +304,7 @@ class SapperGame{
         if i > 0 {
             if isEmpty(i - 1, j) && !isOpen(i - 1, j){
                 gameField[i - 1][j].staus = .openCell
-                delegate?.cellWasOpenInAnalizeHandler((i - 1, j))
+                //delegate?.cellWasOpenInAnalize((i - 1, j))
                 checkCellsForOpen(i - 1, j)
             }
         }
@@ -314,7 +312,7 @@ class SapperGame{
         if i < numColumnsAndRows - 1 {
             if isEmpty(i + 1 , j) && !isOpen(i + 1 , j){
                 gameField[i + 1][j].staus = .openCell
-                delegate?.cellWasOpenInAnalizeHandler((i + 1, j))
+                //delegate?.cellWasOpenInAnalize((i + 1, j))
                 checkCellsForOpen(i + 1, j)
             }
         }
@@ -323,7 +321,7 @@ class SapperGame{
         if j > 0 && i > 0{
             if isEmpty(i - 1 , j - 1) && !isOpen(i - 1 , j - 1){
                 gameField[i - 1][j - 1].staus = .openCell
-                delegate?.cellWasOpenInAnalize((i - 1, j - 1))
+               // delegate?.cellWasOpenInAnalize((i - 1, j - 1))
                 checkCellsForOpen(i - 1, j - 1)
             }
         }
@@ -331,7 +329,7 @@ class SapperGame{
         if j < numColumnsAndRows - 1 && i > 0{
             if isEmpty(i - 1 , j + 1)  && !isOpen(i - 1 , j + 1){
                 gameField[i - 1][j + 1].staus = .openCell
-                delegate?.cellWasOpenInAnalize((i - 1, j + 1))
+                //delegate?.cellWasOpenInAnalize((i - 1, j + 1))
                 checkCellsForOpen(i - 1, j + 1)
             }
         }
@@ -339,7 +337,7 @@ class SapperGame{
         if j > 0 && i < numColumnsAndRows - 1{
             if isEmpty(i + 1 , j - 1)  && !isOpen(i + 1 , j - 1){
                 gameField[i + 1][j - 1].staus = .openCell
-                delegate?.cellWasOpenInAnalize((i + 1, j - 1))
+                //delegate?.cellWasOpenInAnalize((i + 1, j - 1))
                 checkCellsForOpen(i + 1, j - 1)
             }
         }
@@ -347,7 +345,7 @@ class SapperGame{
         if j < numColumnsAndRows - 1 && i < numColumnsAndRows - 1{
             if isEmpty(i + 1 , j + 1) && !isOpen(i + 1 , j + 1){
                 gameField[i + 1][j + 1].staus = .openCell
-                delegate?.cellWasOpenInAnalize((i + 1, j + 1))
+                //delegate?.cellWasOpenInAnalize((i + 1, j + 1))
                 checkCellsForOpen(i + 1, j + 1)
             }
         }

@@ -71,6 +71,7 @@ class VDevGameViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
 
+
     func endGame(isWin : Bool){
         if isWin{
             print("Win!!!!!!!")
@@ -157,19 +158,14 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         do{
-            var pathArray = [IndexPath]()
-
-            try game.makeStep(indexPath[0],indexPath[1]){
-                item in
-                    pathArray.append(IndexPath(row: item.0, section: item.1))
-            }
+            try game.makeStep(indexPath[0],indexPath[1])
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
 
             cell.myLabel.text = game!.gameField[indexPath[0]][indexPath[1]].testDescription
 
-            pathArray.append(indexPath)
-            collectionView.reloadItems(at: pathArray)
+            //collectionView.reloadItems(at: [indexPath])
+            collectionView.reloadData()
             game.testPrintField()
 
         }catch{
