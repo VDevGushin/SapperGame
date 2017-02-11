@@ -13,8 +13,16 @@ class VDevGameViewController: UIViewController {
     var gameSettings : GameSettings?
     var game : SapperGame!
     var gameDelegate : GameObserverDelegate!
+    var gameMode : GameMode?
 
     @IBOutlet weak var gameField: UICollectionView!
+
+    @IBOutlet weak var gameModeSwitch: UISwitch!
+
+    @IBOutlet weak var gameModeLabel: UILabel!
+
+    @IBAction func gameModeValueChanged(_ sender: AnyObject) {
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +31,6 @@ class VDevGameViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //initStartGame()
     }
 
 
@@ -46,8 +53,9 @@ class VDevGameViewController: UIViewController {
 
     func initStartGame(){
         do{
+
             gameDelegate = GameObserverDelegate(endGameAction : endGame)
-            game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, delegate : gameDelegate)
+            game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, gameMode: gameMode ?? .real, delegate : gameDelegate)
 
         }catch let GameErrors.bomblimit(n) {
             print("Init error \(n) (bomb limit)")
@@ -86,7 +94,7 @@ class VDevGameViewController: UIViewController {
         }else{
             print("Fuck!!!")
 
-            let alertController = UIAlertController(title: "Fuck!!!", message:
+            let alertController = UIAlertController(title: "BOOooooM!!!", message:
                 "You lose!", preferredStyle: UIAlertControllerStyle.alert )
 
             alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
@@ -145,10 +153,10 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! MyCollectionViewCell
 
         // Use the outlet in our custom class to get a reference to the UILabel in the cell
-        cell.myLabel.text = game!.gameField[indexPath[0]][indexPath[1]].testDescription
+        cell.myLabel.text = game!.printCellValue(indexPath[0],indexPath[1])
         cell.backgroundColor = UIColor.white // make cell more visible in our example project
         cell.layer.borderColor = UIColor.black.cgColor
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 0
         cell.layer.cornerRadius = 8
 
         return cell
@@ -162,7 +170,7 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
 
-            cell.myLabel.text = game!.gameField[indexPath[0]][indexPath[1]].testDescription
+            cell.myLabel.text = game!.printCellValue(indexPath[0],indexPath[1])
 
             //collectionView.reloadItems(at: [indexPath])
             collectionView.reloadData()

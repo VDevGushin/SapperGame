@@ -31,6 +31,10 @@ enum Squear{
     }
 }
 
+enum GameMode{
+    case test, real
+}
+
 enum CellStatus{
     case closeCell
     case openCell
@@ -81,14 +85,16 @@ enum GameErrors: Error{
 
 class SapperGame{
 
-    weak var delegate : GameObserver?
+    unowned let delegate : GameObserver
     var numColumnsAndRows : Int
     var stepCount = 0
     var bombsCount : Int
     var gameField = Array<Array<GameCell>>()
+    var gameMode : GameMode
 
-    init(numbersOfField : Int, bombsCount : Int , delegate : GameObserver? = nil) throws{
+    init(numbersOfField : Int, bombsCount : Int ,gameMode : GameMode ,delegate : GameObserver) throws{
         self.delegate = delegate
+        self.gameMode = gameMode
         numColumnsAndRows = numbersOfField
         self.bombsCount = bombsCount
         let maxBombsLimit = numColumnsAndRows * numColumnsAndRows
@@ -103,7 +109,7 @@ class SapperGame{
     private func buildGameField(){
         gameFieldInit()
         InitFields()
-        delegate?.gameDidStart(message :  "Begin game \(numColumnsAndRows) x \(numColumnsAndRows) with \(bombsCount) bombs")
+        delegate.gameDidStart(message :  "Begin game \(numColumnsAndRows) x \(numColumnsAndRows) with \(bombsCount) bombs")
         testPrintField()
     }
 
@@ -239,7 +245,7 @@ class SapperGame{
     //game loop
     func makeStep(_ row: Int,_ column : Int) throws{
         if stepCount == 0 {
-            delegate?.gameDidStart(message : "let's get ready to rumble")
+            delegate.gameDidStart(message : "let's get ready to rumble")
         }
 
         if isOpen(row, column){
@@ -250,15 +256,15 @@ class SapperGame{
         switch gameField[row][column].value{
         case .Bomb:
             gameField[row][column].staus = .boom
-            delegate?.gameDidEnd(isWin: false)
+            delegate.gameDidEnd(isWin: false)
         case let .Number(x) :
             gameField[row][column].staus = .openCell
             if x == 0{
                 checkCellsForOpen(row,column)
             }
-            delegate?.stepWasTaken(success: true, point: (row, column), message : nil)
+            delegate.stepWasTaken(success: true, point: (row, column), message : nil)
             if checkForWin(){
-                delegate?.gameDidEnd(isWin: true)
+                delegate.gameDidEnd(isWin: true)
             }
         }
     }
@@ -282,7 +288,7 @@ class SapperGame{
         }
         return false
     }
-    
+
     private func checkCellsForOpen(_ i : Int ,_ j : Int){
 
         if j > 0{
@@ -349,5 +355,18 @@ class SapperGame{
                 checkCellsForOpen(i + 1, j + 1)
             }
         }
+    }
+}
+
+extension SapperGame{
+    func printCellValue(_ row : Int, _ column : Int) -> String{
+        let cell  = gameField[row][column]
+            switch gameMode {
+            case .test:
+                return cell.testDescription
+            default:
+                return cell.description
+            }
+
     }
 }
