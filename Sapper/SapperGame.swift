@@ -210,6 +210,15 @@ class SapperGame{
         }
     }
 
+    private func isNumber(_ i : Int, _ j : Int) -> Bool{
+        switch gameField[i][j].value{
+        case  .Number:
+            return true
+        default:
+            return false
+        }
+    }
+
     private func isOpen(_ i : Int, _ j : Int) -> Bool{
         switch gameField[i][j].staus{
         case .openCell:
@@ -259,14 +268,47 @@ class SapperGame{
             delegate.gameDidEnd(isWin: false)
         case let .Number(x) :
             gameField[row][column].staus = .openCell
+
+
             if x == 0{
                 checkCellsForOpen(row,column)
+            }else {
+                simpleOpenFields(row, column)
             }
+
             delegate.stepWasTaken(success: true, point: (row, column), message : nil)
             if checkForWin(){
                 delegate.gameDidEnd(isWin: true)
             }
         }
+    }
+
+    func simpleOpenFields(_ i : Int ,_ j : Int){
+
+        if j > 0{
+            if isNumber(i , j - 1) && !isOpen(i , j - 1){
+                gameField[i][j - 1].staus = .openCell
+            }
+        }
+
+        if j < numColumnsAndRows - 1{
+            if isNumber(i , j + 1) && !isOpen(i , j + 1){
+                gameField[i][j + 1].staus = .openCell
+            }
+        }
+
+        if i > 0 {
+            if isNumber(i - 1, j) && !isOpen(i - 1, j){
+                gameField[i - 1][j].staus = .openCell
+            }
+        }
+
+        if i < numColumnsAndRows - 1 {
+            if isNumber(i + 1 , j) && !isOpen(i + 1 , j){
+                gameField[i + 1][j].staus = .openCell
+            }
+        }
+
     }
 
     private func checkForWin() -> Bool{
