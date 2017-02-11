@@ -10,10 +10,11 @@ import UIKit
 
 class VDevGameViewController: UIViewController {
 
+    let reuseIdentifier = "cell"
     var gameSettings : GameSettings?
     var game : SapperGame!
     var gameDelegate : GameObserverDelegate!
-    var gameMode : GameMode?
+    var initSuccess : Bool = true
 
     @IBOutlet weak var gameField: UICollectionView!
 
@@ -22,17 +23,12 @@ class VDevGameViewController: UIViewController {
     @IBOutlet weak var gameModeLabel: UILabel!
 
     @IBAction func gameModeValueChanged(_ sender: AnyObject) {
+        if sender.isOn!{
+            game.gameMode = .test
+        }else {
+            game.gameMode = .real
+        }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initStartGame()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
 
     @IBAction func endGameHandler(_ sender: AnyObject) {
         dismiss(animated: true, completion: nil)
@@ -51,31 +47,40 @@ class VDevGameViewController: UIViewController {
         }
     }
 
-    func initStartGame(){
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        gameDelegate = GameObserverDelegate(endGameAction : endGame)
+        if gameSettings == nil{
+            gameSettings = GameSettings(numColumnsAndRows: 9, numberOfBombs: 15)
+        }
+        initSuccess = initStartGame()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !initSuccess{
+            showErrorMessage("Init game error")
+            dismiss(animated: true, completion: nil)
+        }
+    }
+
+
+    func initStartGame() -> Bool{
         do{
+            game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, gameMode: .real, delegate : gameDelegate)
+            return true;
 
-            gameDelegate = GameObserverDelegate(endGameAction : endGame)
-            game = try SapperGame(numbersOfField : gameSettings!.numColumnsAndRows , bombsCount : gameSettings!.numberOfBombs, gameMode: gameMode ?? .real, delegate : gameDelegate)
-
-        }catch let GameErrors.bomblimit(n) {
-            print("Init error \(n) (bomb limit)")
-            //showErrorMessage("Init error \(n) bomb limit)")
-        }catch   GameErrors.outOfField{
-            print("outOfField")
-           // showErrorMessage("outOfField")
         }catch{
             print("error")
-           //showErrorMessage("game error")
+            return false
         }
     }
 
     func showErrorMessage(_ message : String){
-
         let alertController = UIAlertController(title: "Game error", message:
             message, preferredStyle: UIAlertControllerStyle.alert)
-
         alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
-
         present(alertController, animated: true, completion: nil)
     }
 
@@ -83,22 +88,16 @@ class VDevGameViewController: UIViewController {
     func endGame(isWin : Bool){
         if isWin{
             print("Win!!!!!!!")
-
             let alertController = UIAlertController(title: "EEeee!!!", message:
                 "You win!", preferredStyle: UIAlertControllerStyle.alert)
-
             alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
-
             present(alertController, animated: true, completion: nil)
 
         }else{
             print("Fuck!!!")
-
             let alertController = UIAlertController(title: "BOOooooM!!!", message:
                 "You lose!", preferredStyle: UIAlertControllerStyle.alert )
-
             alertController.addAction(UIAlertAction(title: "Ок", style: UIAlertActionStyle.default,handler: goBack))
-
             present(alertController, animated: true, completion: nil)
         }
     }
@@ -109,7 +108,6 @@ class VDevGameViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 
@@ -122,22 +120,18 @@ class VDevGameViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    let reuseIdentifier = "cell" // also enter this string as the cell identifier in the storyboard
 }
 
 class MyCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var myLabel: UILabel!
+    var gameObject : GameCell!
 }
 
 
 extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewDelegate{
 
 
-    // MARK: - UICollectionViewDataSource protocol
-
-
-    // tell the collection view how many cells to make
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return gameSettings!.numColumnsAndRows
     }
@@ -149,12 +143,11 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
     // make a cell for each cell index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        // get a reference to our storyboard cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! MyCollectionViewCell
 
-        // Use the outlet in our custom class to get a reference to the UILabel in the cell
         cell.myLabel.text = game!.printCellValue(indexPath[0],indexPath[1])
-        cell.backgroundColor = UIColor.white // make cell more visible in our example project
+        cell.gameObject = game!.getCellObjec(indexPath[0],indexPath[1])
+        cell.backgroundColor = UIColor.white
         cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 0
         cell.layer.cornerRadius = 8
@@ -162,17 +155,13 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
         return cell
     }
 
-    // MARK: - UICollectionViewDelegate protocol
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         do{
             try game.makeStep(indexPath[0],indexPath[1])
 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MyCollectionViewCell
-
             cell.myLabel.text = game!.printCellValue(indexPath[0],indexPath[1])
 
-            //collectionView.reloadItems(at: [indexPath])
             collectionView.reloadData()
             game.testPrintField()
 
@@ -183,14 +172,12 @@ extension VDevGameViewController : UICollectionViewDataSource, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.red
+        collectionView.cellForItem(at: indexPath)?.backgroundColor = UIColor.red
     }
 
     // change background color back when user releases touch
     func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.backgroundColor = UIColor.white
+        collectionView.cellForItem(at: indexPath)?.backgroundColor = UIColor.white
     }
 
 }

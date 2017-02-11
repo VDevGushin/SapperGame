@@ -15,30 +15,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var RowsAndColumnsSlider: UISlider!
     @IBOutlet weak var BombsCountSlider: UISlider!
 
-    var rowsAndColumnsCount = 0
-    var maxBombsCount = 0
-    var bombsCout = 0
 
     @IBAction func rowsAndColumnsSliderValueChanged(_ sender: UISlider) {
         let roundedValue = round(sender.value / 1) * 1
         sender.value = roundedValue
-        bombsCout = Int(BombsCountSlider.minimumValue)
-        BombsCountSlider.value = Float(bombsCout)
-        rowsAndColumnsCount = Int(roundedValue)
-        updateCurrentBombsNumber()
-        updateRowsColumnsCountNumber()
+        BombsCountSlider.value = Float(BombsCountSlider.minimumValue)
+        RowsAndColumnsTF.text =  String(Int(sender.value))
+        BombsCountTF.text =  String(Int(BombsCountSlider.value))
         updateMaxBombsCount()
     }
 
     @IBAction func bombsCountValueChanged(_ sender: UISlider) {
         let roundedValue = round(sender.value / 1) * 1
         sender.value = roundedValue
-        bombsCout = Int(roundedValue)
-        updateCurrentBombsNumber()
+        BombsCountTF.text =  String(Int(roundedValue))
     }
 
     @IBAction func startGameAction(_ sender: UIButton) {
-        let gameSettings = GameSettings(numColumnsAndRows: rowsAndColumnsCount, numberOfBombs: bombsCout)
+        let gameSettings = GameSettings(numColumnsAndRows: Int(RowsAndColumnsSlider.value), numberOfBombs: Int(BombsCountSlider.value))
         print(gameSettings)
         performSegue(withIdentifier: "BeginGameSegue", sender: gameSettings)
     }
@@ -54,32 +48,19 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initFields()
+        RowsAndColumnsTF.text =  String(Int(RowsAndColumnsSlider.value))
+        BombsCountTF.text =  String(Int(BombsCountSlider.value))
+        updateMaxBombsCount()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 
-    private func initFields(){
-        rowsAndColumnsCount = Int((RowsAndColumnsSlider.value))
-        bombsCout = Int(BombsCountSlider.value)
-        updateRowsColumnsCountNumber()
-        updateCurrentBombsNumber()
-        updateMaxBombsCount()
-    }
 
-    private func updateRowsColumnsCountNumber(){
-        RowsAndColumnsTF.text = String(rowsAndColumnsCount)
-    }
-
-    private func updateCurrentBombsNumber(){
-         BombsCountTF.text =  String(bombsCout)
-    }
 
     private func updateMaxBombsCount(){
-        maxBombsCount = (rowsAndColumnsCount * rowsAndColumnsCount) - 1
-        BombsCountSlider.maximumValue = Float(maxBombsCount)
+        BombsCountSlider.maximumValue = Float((Int(RowsAndColumnsSlider.value) * Int(RowsAndColumnsSlider.value)) - 1)
     }
 }
 

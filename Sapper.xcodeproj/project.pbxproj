@@ -43,6 +43,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF4C72411E4F9690000D8BCF /* Calc */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Calc;
+			sourceTree = "<group>";
+		};
 		EF6ADED41E4E4770008BA441 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +69,7 @@
 		EF6ADEDF1E4E4771008BA441 /* Sapper */ = {
 			isa = PBXGroup;
 			children = (
+				EF4C72411E4F9690000D8BCF /* Calc */,
 				EF6ADEF21E4E47FB008BA441 /* GameLogic */,
 				EF6ADEE01E4E4771008BA441 /* AppDelegate.swift */,
 				EF6ADEE21E4E4771008BA441 /* ViewController.swift */,
@@ -322,6 +330,7 @@
 				EF6ADEF11E4E4771008BA441 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

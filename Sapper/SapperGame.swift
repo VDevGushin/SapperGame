@@ -411,4 +411,8 @@ extension SapperGame{
             }
 
     }
+
+    func getCellObjec(_ row: Int, _ column: Int) -> GameCell{
+        return gameField[row][column];
+    }
 }
