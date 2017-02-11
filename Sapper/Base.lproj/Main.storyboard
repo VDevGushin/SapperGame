@@ -40,7 +40,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="vJ2-Y0-s5W"/>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minValue="6" maxValue="12" translatesAutoresizingMaskIntoConstraints="NO" id="cQp-EC-PhG" userLabel="RowsAndColumnsSlider">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minValue="4" maxValue="6" translatesAutoresizingMaskIntoConstraints="NO" id="cQp-EC-PhG" userLabel="RowsAndColumnsSlider">
                                 <connections>
                                     <action selector="rowsAndColumnsSliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="b9w-jT-WEl"/>
                                 </connections>

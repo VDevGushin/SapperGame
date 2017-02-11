@@ -22,7 +22,10 @@ class ViewController: UIViewController {
     @IBAction func rowsAndColumnsSliderValueChanged(_ sender: UISlider) {
         let roundedValue = round(sender.value / 1) * 1
         sender.value = roundedValue
+        bombsCout = Int(BombsCountSlider.minimumValue)
+        BombsCountSlider.value = Float(bombsCout)
         rowsAndColumnsCount = Int(roundedValue)
+        updateCurrentBombsNumber()
         updateRowsColumnsCountNumber()
         updateMaxBombsCount()
     }
